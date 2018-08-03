@@ -2,8 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>
-</title>
+<title>Home</title>
 <link rel="shortcut icon" href="/favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -25,7 +24,7 @@
 		class="navbar-brand" href="#">
 		<img src="/favicon.png" height="20px" /> the chauffeur</a>
 		<ul class="navbar-nav mr-auto">
-		<li class="nav-item"><a class="nav-link text-white" href="/index.jsp"><i class="fa fa-home"></i> Home</a>
+		<li class="nav-item"><a class="nav-link text-white" href="/index.php"><i class="fa fa-home"></i> Home</a>
 		</li>
 	</ul>
 	<ul class="navbar-nav">
