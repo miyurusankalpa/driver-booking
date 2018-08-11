@@ -6,7 +6,7 @@ echo '<div class="container">
 		Login to the System
 	</h1>
 	<br>
-	<form action="Login" method="post">
+	<form action="login_proccess.php" method="post">
 		<input type="text" class="form-control"
 			name="username" placeholder="enter a username"> <br>
 		<input type="password" class="form-control"
