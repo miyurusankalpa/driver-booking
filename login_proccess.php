@@ -1,36 +1,38 @@
-<?php
+<?php //todo no json login
+
+header('Content-Type: application/json');
 include_once 'mysqli.php';
 if(!isset($mysqli)) $mysqli = new mysqli($server, $user, $pass, $db);
+
+$array = array();
 
 if((!empty($_POST)) OR (!empty($_GET))){
 
 	if(isset($_POST['username'],$_POST['password'])) {
 		$username = $_POST['username'];
 		$password = md5($_POST['password']);
-		$row = mysqli_fetch_array(mysqli_query($mysqli, "SELECT * FROM users WHERE username='".mysqli_real_escape_string($mysqli,$username)."' OR email='".mysqli_real_escape_string($mysqli,$username)."' AND password='".$password."'"));
-		if(empty($row['password'])) $action = "Error logging in. The password is Empty."; elseif($password!==$row['password']) $action = "Error logging in. The password does not match.";
+		$row = mysqli_fetch_array(mysqli_query($mysqli, "SELECT * FROM users WHERE username='".mysqli_real_escape_string($mysqli,$username)."'"));
+		
+		if(empty($row['password'])) {
+			$array["result"] = "error";
+			$array["message"] = "No such user"; 
+		} elseif($password!==$row['password']) {
+			$array["result"] = "error";
+			$array["message"] = "Wrong Password";
+		} elseif($password==$row['password']) {
+			//set cookies
+			$array["result"] = "success";
+			$array["message"] = "Logged In";
+		}
+
 	}
+} else {
+	$array["result"] = "error";
+	$array["message"] = "Empty data";
 }
 
-include 'header.php';
+$json = json_encode($array);
 
-echo '<div class="container">
-	<h1>
-		Login to the System
-	</h1>
-	<br>
-	<form action="Login" method="post">
-		<input type="text" class="form-control"
-			name="username" placeholder="enter a username"> <br>
-		<input type="password" class="form-control"
-			name="password" placeholder="enter a password"> <br> <input
-			type="submit" class="btn btn-primary btn-block" value="Login">
-	</form>
-	
-<br>
-<b>use the username "test" and password "test"" for the first login</b>
-</div>';
-
-include 'footer.php';
+echo $json;
 
 ?>
