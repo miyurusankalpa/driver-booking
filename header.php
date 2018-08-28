@@ -6,7 +6,7 @@
 <link rel="shortcut icon" href="/favicon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+<script src="jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 <link href="/bootstrap/sticky-footer-navbar.css" rel="stylesheet">
 <link rel="stylesheet" href="/fontawesome/css/fontawesome-all.min.css">
@@ -18,6 +18,7 @@
 </style>
 </head>
 <body>
+	<script type="text/javascript">var j = jQuery.noConflict();</script>
  <header>
 	<nav class="navbar navbar-expand-lg navbar-dark nav-yellowish"> 
 	<a
@@ -29,6 +30,7 @@
 	</ul>
 	<ul class="navbar-nav">
 		<li class="nav-item">
+			<li class="nav-item"><a class="nav-link text-white" href="/login.php"><i class="fa fa-home"></i> Login</a>
  		</li>
 	</ul>
 	</nav>
