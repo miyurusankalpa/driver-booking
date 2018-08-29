@@ -13,3 +13,4 @@ services:
 
 before_install:
   - mysql -e 'CREATE DATABASE Chaf;'
+  - find . -type f -iname "*.php" -print0 | xargs -0 -n1 php -l

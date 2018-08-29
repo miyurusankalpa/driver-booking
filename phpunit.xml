@@ -1,0 +1,12 @@
+<phpunit
+	colors="true"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	>
+	<testsuites>
+		<testsuite name="file_errors">
+			<directory>tests</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>
