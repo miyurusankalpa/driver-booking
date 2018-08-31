@@ -38,6 +38,4 @@
           </div>
 		  <p>
 		      If you have alredy registered <a href ="login.php">Sign in</a>
-		  </p>
-		  
-     </form>
+       </p>
