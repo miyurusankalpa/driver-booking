@@ -1,8 +1,8 @@
 <?php  
-
+	include_once 'mysqli.php';
 	$error = array();
 	// connecting to database
-	$db = mysqli_connect('localhost', 'system', 'gdfgdf');
+	$sql =new mysqli($server, $user, $pass, $db)
 
 	if (isset($_POST['register'])) {
 
@@ -48,9 +48,14 @@
 		if (count($error)== 0) {
 			
 				//$encryptpass = md5($password);//encryption
-				$sql = "INSERT INTO user (Firstname, Lastname, username, email, password, mobileNo) VALUES ('$Firstname', '$Lastname', '$username', '$Email', '$password', '$mobileNo')";
+				$query = "INSERT INTO user (Firstname, Lastname, username, email, password, mobileNo) VALUES ('$Firstname', '$Lastname', '$username', '$Email', '$password', '$mobileNo')";
 				
-				mysqli_query($db, $sql);
+				$x = mysqli_query($sql, $query);
+			
+			if($x == 1){
+				
+				die("Successful");
+			}
 		}
 		
 
