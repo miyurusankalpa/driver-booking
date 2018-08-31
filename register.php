@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Customer registration </title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-
      <div class="header">
 	      <h2>Customer Registration</h2>
 	 </div>
@@ -49,5 +41,3 @@
 		  </p>
 		  
      </form>
-</body>
-</html>
