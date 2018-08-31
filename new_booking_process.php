@@ -34,7 +34,7 @@ if (isset($_POST['customer'])){
 		if (count($error)== 0) {
 			
 				//$encryptpass = md5($password);//encryption
-				$query = "INSERT INTO booking (user_id,date, pickup, destination) VALUES ( '".$_COOKIE["user"]."', '$date', '$pickup', '$destination')";
+				$query = "INSERT INTO booking (user_id,date, time, pickup, destination) VALUES ( '".$_COOKIE["user"]."', '$time', '$date', '$pickup', '$destination')";
 				
 				$x = mysqli_query($sql, $query);
 				
