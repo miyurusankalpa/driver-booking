@@ -20,6 +20,8 @@ if((!empty($_POST)) OR (!empty($_GET))){
 			$array["result"] = "error";
 			$array["message"] = "Wrong Password";
 		} elseif($password==$row['password']) {
+			setcookie("user", $username, time()+3600);  /* expire in 1 hour */
+			
 			//set cookies
 			$array["result"] = "success";
 			$array["message"] = "Logged In";

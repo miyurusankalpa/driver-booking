@@ -7,7 +7,7 @@
 		Login to the System
 	</h1>
 	<br>
-	<form action="login_proccess.php" method="post">
+	<form>
 		<input type="text" class="form-control"	name="username" placeholder="enter a username"> <br>
 		<input type="password" class="form-control"	name="password" placeholder="enter a password"> <br> 
 		<input type="submit" id="login_button" class="btn btn-primary btn-block" value="Login">
