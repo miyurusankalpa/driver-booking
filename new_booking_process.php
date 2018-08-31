@@ -9,8 +9,10 @@ $sql =new mysqli($server, $user, $pass, $db);
 if (isset($_POST['customer'])){
 
 	$date = mysql_real_escape_string($_POST['date']);
+	$time = mysql_real_escape_string($_POST['time']);
 	$pickup = mysql_real_escape_string($_POST['pickup']);
 	$destination = mysql_real_escape_string($_POST['destination']);
+	
 	
 	
 		if(empty($date)){
