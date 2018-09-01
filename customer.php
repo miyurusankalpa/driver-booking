@@ -3,10 +3,10 @@
 
 echo '<div class="container">
 	<h1>
-		Welcome Customer '.$customer.'
+		Welcome Customer '.$_COOKIE["user"].'
 	</h1>
 	<br>
-	<a href="/new_bookings.php" class="btn btn-info">New Bookings</a>
+	<a href="/new_booking.php" class="btn btn-info">New Bookings</a>
 	
 <br>
 
