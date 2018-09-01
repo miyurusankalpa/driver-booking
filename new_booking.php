@@ -1,7 +1,7 @@
 <?php
 	include 'header.php';
 ?>
-<div class="jumbotron">
+<div class="card card-body bg-light">
     <h2 class="text-center">Booking Details</h2>
 	<hr>
      <form method="post">	   
