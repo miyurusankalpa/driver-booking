@@ -2,49 +2,50 @@
 	include 'header.php';
 ?>
 
-<div class="container">
-	<h1>
-		Login to the System
-	</h1>
-	<br>
+<div class="card card-body bg-light">
+	<h2 class="text-center">Login</h2>
+	<hr>
 	<form>
-		<input type="text" class="form-control"	name="username" placeholder="enter a username"> <br>
-		<input type="password" class="form-control"	name="password" placeholder="enter a password"> <br> 
-		<input type="submit" id="login_button" class="btn btn-primary btn-block" value="Login">
+	
+		<div class="form-group row">
+          	<label class="col-sm-2 col-form-label">Username</label>
+		<div class="col-sm-10">
+          	   <input type="text" class="form-control" name="username" required="">
+         	</div>  
+	   </div>
+	   <div class="form-group row">
+          	<label class="col-sm-2 col-form-label">Password</label>
+		<div class="col-sm-10">
+          	   <input type="password" class="form-control" name="password" required="">
+         	</div>  
+	   </div>
+	   
+		<input type="submit" id="login_button" class="btn btn-success btn-block" value="Login">
 		<br><div id="login_status"></div>
 	</form>
 	
 <br>
-<b>use the username "test" and password "test"" for the first login</b>
 </div>
 
 <script type="text/javascript">
 j(document).ready(function () {
-    j('#login_button').click(function (event) {
-	event.preventDefault();
+    j('#login_button').click(function (e) {
 
+	e.preventDefault();
+
+	if(!j(this).closest('form')[0].checkValidity()){
+		return false;
+	} 
+	
 	var username = j("input[name=username]").val();
 	var password = j("input[name=password]").val();
-
-	if (username == '') {
-		j("#un_status").attr('class','form-group has-warning').find(".un_status_sign").attr('class','un_status_sign input-group-addon').html('<i class="glyphicon glyphicon-remove"></i>').fadeIn("slow");
-        return false;
-    } else {
-		j("#un_status").attr('class','form-group has-success').find(".un_status_sign").attr('class','un_status_sign input-group-addon').html('<i class="glyphicon glyphicon-ok"></i>').fadeIn("slow");
-    }
-	if (password == '') {
-		j("#pw_status").attr('class','form-group has-warning').find(".pw_status_sign").attr('class','pw_status_sign input-group-addon').html('<i class="glyphicon glyphicon-remove"></i>').fadeIn("slow");
-        return false;
-    } else {
-		j("#pw_status").attr('class','form-group has-warning').find(".pw_status_sign").attr('class','pw_status_sign input-group-addon').html('<i class="glyphicon glyphicon-ok"></i>').fadeIn("slow");
-    }
 
 	j('input').attr('disabled', true);
 
 	j.ajax({
 	   type: "POST",
 	   dataType: 'json',
-	   url: "login_proccess.php",
+	   url: "login_process.php",
 	   data: 'username='+ username +'&password='+ password +'&json=true',
 	   cache: false,
 	   success: function(data){
