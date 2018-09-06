@@ -27,7 +27,6 @@ header('Content-Type: application/json');
 				$array["result"] = "success";
 				$array["message"] = "Logged In";
 			}
-
 		}
 	} else {
 		$array["result"] = "error";

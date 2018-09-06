@@ -17,6 +17,7 @@ INSERT INTO `users` (`firstname`, `lastname`, `username`, `password`, `mobileno`
 
 CREATE TABLE `booking` (
   `booking_id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
   `date` DATE NULL,
   `time` TIMESTAMP NULL,
   `pickup` VARCHAR(60) NULL,
