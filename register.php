@@ -45,6 +45,13 @@
           	   <input type="password" class="form-control" name="Conpassword" required="">
          	</div>  
 	   </div>  
+	
+	   <div class="form-group row">
+          	<label class="col-sm-2 col-form-label">Mobile Number</label>
+		<div class="col-sm-10">
+			<input type="tel" class="form-control" name="mobileNo" placeholder="1234567890" pattern="[0-9]{10}" required />
+         	</div>  
+	   </div>
 
           <div class="form-group row">
           	   <button type="submit" name="Register" id="reg_button" class="btn btn-success btn-block">Submit</button>
@@ -71,6 +78,7 @@ j(document).ready(function () {
 	var email = j("input[name=Email]").val();
 	var password = j("input[name=password]").val();
 	var conpasswd = j("input[name=Conpassword]").val();
+	var mobileNo = j("input[name=mobileNo]").val();
 
 	j('input').attr('disabled', true);
 
@@ -78,7 +86,7 @@ j(document).ready(function () {
 	   type: "POST",
 	   dataType: 'json',
 	   url: "register_process.php",
-	   data: 'Firstname='+ firstname +'&Lastname='+ lastname +'&username='+ username +'&Email='+ email +'&password='+ password +'&Conpassword='+ conpasswd +'&register=true&json=true',
+	   data: 'Firstname='+ firstname +'&Lastname='+ lastname +'&username='+ username +'&Email='+ email +'&password='+ password +'&Conpassword='+ conpasswd +'&mobileNo='+ mobileNo +'&register=true&json=true',
 	   cache: false,
 	   success: function(data){
 				if(data.result=="error"){
@@ -87,7 +95,6 @@ j(document).ready(function () {
 				}
 				if(data.result=="success"){
 					j("#reg_status").html('<div class="alert alert-success">'+ data.message +'</div>').fadeIn("slow");
-					window.location = ("/login.php");
 				}
 			},
 		error: function(jqXHR,error, errorThrown){
