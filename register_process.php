@@ -48,27 +48,30 @@ header('Content-Type: application/json');
 				array_push($error, "Confim passwords do not match. Try again");
 		}
 
-		if(count($error)== 0) {
+		if(count($error) == 0) {
 				$encryptpass = md5($password); //encryption
-				$query = "INSERT INTO users (firstname, lastname, username, email, password, mobileno) VALUES ('$Firstname', '$Lastname', '$username', '$email', '$encryptpass', '$mobileNo')";
+				$query = "INSERT INTO users (`firstname`, `lastname`, `username`, `email`, `password`, `mobileno`, `group`) VALUES ('$Firstname', '$Lastname', '$username', '$email', '$encryptpass', '$mobileNo','Customer')";
 				
 				$x = mysqli_query($sql, $query);
-			if($x){
-				$array["result"] = "success";
-				$array["message"] = "Registration Successful";
-			} else array_push($error, "Error adding date to the database. Try again");
-			
-		} else {
-			$array["result"] = "error";
-			$array["message"] = $error;
-		}
-	} else {
-				$array["result"] = "error";
-				$array["message"] = "Empty data";
-	}
+
+				if($x)
+				{
+					$array["result"] = "success";
+					$array["message"] = "Registration Successful. Please use the sign in link to login.";
+					goto output;
+				} else {
+					//echo mysqli_error($sql);
+					array_push($error, "Error adding date to the database. Try again");
+				}
+			}			
+	} else array_push($error, "Empty Data.");
+
+	$array["result"] = "error";
+	$array["message"] = $error;
+	
+output:	
 
 	$json = json_encode($array);
-
 	echo $json;
 
 ?>
