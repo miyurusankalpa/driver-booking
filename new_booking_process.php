@@ -8,7 +8,7 @@ $error = array();
 $sql =new mysqli($server, $user, $pass, $db);
 
 if (isset($_POST['customer'])) {
-
+	
 	$date = mysqli_real_escape_string($sql, $_POST['date']);
 	$time = mysqli_real_escape_string($sql, $_POST['time']);
 	$pickup = mysqli_real_escape_string($sql, $_POST['pickup']);
@@ -17,6 +17,11 @@ if (isset($_POST['customer'])) {
 		if(empty($date)){
 				array_push($error,"Date is required");
 		}
+		
+		if(empty($time)){
+				array_push($error,"Time is required");
+		}
+		
 		if(empty($pickup)){
 				array_push($error,"Pickup location is required");
 		}
@@ -25,8 +30,12 @@ if (isset($_POST['customer'])) {
 				array_push($error,"End point is required");
 		}
 		
+		
+		$datetime = DateTime::createFromFormat('H:i', $time);
+		$formatted_time = $datetime->format('H:i:s');
+	
 		if (count($error)== 0) {
-				$query = "INSERT INTO booking (`user_id`, `date`, `time`, `pickup`, `destination`) VALUES ('".$_COOKIE["user"]."', '$time', '$date', '$pickup', '$destination')";
+				$query = "INSERT INTO booking (`user_id`, `date`, `time`, `pickup`, `destination`) VALUES ('".$_COOKIE["user"]."', '$date', '$formatted_time', '$pickup', '$destination')";
 				
 				$x = mysqli_query($sql, $query);
 
@@ -36,8 +45,8 @@ if (isset($_POST['customer'])) {
 					$array["message"] = "Booking Successful.";
 					goto output;
 				} else {
-					//echo mysqli_error($sql);
-					array_push($error, "Error adding date to the database. Try again");
+					echo mysqli_error($sql);
+					array_push($error, "Error adding data to the database. Try again.");
 				}
 			}
 			

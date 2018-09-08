@@ -19,9 +19,9 @@ CREATE TABLE `booking` (
   `booking_id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `date` DATE NULL,
-  `time` TIMESTAMP NULL,
+  `time` TIME NULL,
   `pickup` VARCHAR(60) NULL,
   `destination` VARCHAR(60) NULL,
-  `status` INT NULL,
+  `status` INT NULL DEFAULT '0',
   PRIMARY KEY (`booking_id`)
 );
