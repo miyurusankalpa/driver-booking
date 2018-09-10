@@ -1,4 +1,5 @@
-<?php
+<?php // Start the session
+session_start();
 header('Content-Type: application/json');
 
 	include_once 'mysqli.php';
@@ -11,7 +12,7 @@ header('Content-Type: application/json');
 		if(isset($_POST['username'],$_POST['password'])) {
 			$username = $_POST['username'];
 			$password = md5($_POST['password']);
-			$row = mysqli_fetch_array(mysqli_query($mysqli, "SELECT * FROM users WHERE username='".mysqli_real_escape_string($mysqli,$username)."'"));
+			$row = mysqli_fetch_assoc(mysqli_query($mysqli, "SELECT * FROM users WHERE username='".mysqli_real_escape_string($mysqli,$username)."'"));
 			
 			if(empty($row['username'])) {
 				$array["result"] = "error";
@@ -21,10 +22,12 @@ header('Content-Type: application/json');
 				$array["message"] = "Wrong Password";
 			} elseif($password==$row['password']) {
 				
-				setcookie("user", mysqli_insert_id($mysqli), time()+3600);  /* expire in 1 hour */
+				setcookie("user", $row["user_id"], time()+3600);  /* expire in 1 hour */
+				$_SESSION["user"] = $row["username"];
 				
 				//set cookies
 				$array["result"] = "success";
+				$array["group"] = $row["group"];
 				$array["message"] = "Logged In";
 			}
 		}

@@ -3,7 +3,7 @@
 
 echo '<div class="container">
 	<h1>
-		Welcome Customer '.$_COOKIE["user"].'
+		Welcome Customer '.$_SESSION["user"].'
 	</h1>
 	<br>
 	<a href="/new_booking.php" class="btn btn-info">New Bookings</a>

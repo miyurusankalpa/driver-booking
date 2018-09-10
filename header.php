@@ -1,4 +1,5 @@
-<?php if(empty($title)) $title = "Chauffeur"; ?>
+<?php if(empty($title)) $title = "Chauffeur";  
+if(isset($_COOKIE["user"])) session_start();  ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +21,7 @@
 </style>
 </head>
 <body>
-	<script type="text/javascript">var j = jQuery.noConflict();</script>
+<script type="text/javascript">var j = jQuery.noConflict();</script>
  <header>
 	<nav class="navbar navbar-expand-lg navbar-dark nav-navy_blue"> 
 	<a
@@ -31,12 +32,12 @@
 		</li>
 	</ul>
 	<ul class="navbar-nav">
-		<li class="nav-item">
 		<?php if(isset($_COOKIE["user"])) 
 					echo '<li class="nav-item dropdown" role="button" data-toggle="dropdown">
-						<a class="nav-link text-white dropdown-toggle" href="#"><i class="fa fa-user"></i> Hello '.$_COOKIE["user"].'</a>
+						<a class="nav-link text-white dropdown-toggle" href="#"><i class="fa fa-user"></i> Hello '.$_SESSION["user"].'</a>
+						
 						<div class="dropdown-menu dropdown-menu-right">
-						  <span class="dropdown-item">  <a href="/test">Regular link</a></span>
+						  <a class="dropdown-item" href="123">Action</a>
 						  <div class="dropdown-divider"></div>
 						  <a class="dropdown-item" href="/logout.php">logout</a>
 						</div>'; 

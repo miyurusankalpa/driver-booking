@@ -55,7 +55,10 @@ j(document).ready(function () {
 				}
 				if(data.result=="success"){
 					j("#login_status").html('<div class="alert alert-success">'+ data.message +'</div>').fadeIn("slow");
-					window.location = ("/customer.php");
+					
+					if(data.group=="customer")	window.location = ("/customer.php");
+					if(data.group=="driver")	window.location = ("/driver.php");
+					if(data.group=="admin")	window.location = ("/admin.php");
 				}
 			},
 		error: function(jqXHR,error, errorThrown){
