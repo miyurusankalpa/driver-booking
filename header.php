@@ -32,12 +32,15 @@ if(isset($_COOKIE["user"])) session_start();  ?>
 		</li>
 	</ul>
 	<ul class="navbar-nav">
-		<?php if(isset($_COOKIE["user"])) 
-					echo '<li class="nav-item dropdown" role="button" data-toggle="dropdown">
-						<a class="nav-link text-white dropdown-toggle" href="#"><i class="fa fa-user"></i> Hello '.$_SESSION["user"].'</a>
+
+		<?php include_once 'functions.php';
+		
+		if(isset($_COOKIE["user"])) 
+					echo '<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="" id="dropdown_user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> Hello '.$_SESSION["user"].'</a>
 						
-						<div class="dropdown-menu dropdown-menu-right">
-						  <a class="dropdown-item" href="123">Action</a>
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown_user">
+						  <a class="dropdown-item" href="/'.strtolower($_SESSION['group']).'.php">Dashboard</a>
 						  <div class="dropdown-divider"></div>
 						  <a class="dropdown-item" href="/logout.php">logout</a>
 						</div>'; 

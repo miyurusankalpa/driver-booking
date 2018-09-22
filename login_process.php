@@ -29,6 +29,8 @@ header('Content-Type: application/json');
 				$array["result"] = "success";
 				$array["group"] = ucfirst($row["group"]);
 				$array["message"] = "Logged In";
+				
+				$_SESSION["group"] = $array["group"];
 			}
 		}
 	} else {
