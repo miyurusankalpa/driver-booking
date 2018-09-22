@@ -1,6 +1,6 @@
 <?php
 	include 'header.php';
-
+	
 echo '<div class="container">
 	<h1>
 		Welcome Customer '.$_SESSION["user"].'
@@ -29,16 +29,22 @@ echo '<div class="container">
 				
 	$result = mysqli_query($mysqli, $query);
 	
-	 while ($row=mysqli_fetch_assoc($result))
+	include 'customer_functions.php';
+
+	while($row=mysqli_fetch_assoc($result))
     {
-	echo '<tr>
-      <th scope="row">'.$row['booking_id'].'</th>
-      <td>'.$row['date'].'</td>
-      <td>'.$row['pickup'].'</td>
-      <td>'.$row['destination'].'</td>
-	  <td>'.$row['status'].'</td>
-	</tr>';
-	
+		echo '<tr>
+		  <th scope="row">'.$row['booking_id'].'</th>
+		  <td>'.$row['date'].'</td>
+		  <td>'.$row['pickup'].'</td>
+		  <td>'.$row['destination'].'</td>
+		  <td>'.booking_status2text($row['status']).' 
+			<div class="btn-group float-right" role="group">
+				<a href="status_booking.php?id='.$row['booking_id'].'" class="btn btn-secondary btn-success">status</a>
+				<a href="#" class="btn btn-secondary btn-danger">cancel</a>
+			</div>
+			</td>
+		</tr>';
 	}
 
 echo '</tbody>
