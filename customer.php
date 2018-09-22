@@ -3,10 +3,10 @@
 	
 echo '<div class="container">
 	<h1>
-		Welcome Customer '.$_SESSION["user"].'
+		Welcome '.get_fullname($_COOKIE["user"]).'
 	</h1>
 	<br>
-	<a href="/new_booking.php" class="btn btn-info">New Bookings</a>
+	<a href="/new_booking.php" class="btn btn-info">Book new trip</a>
 	
 <br><br>
 
@@ -29,8 +29,6 @@ echo '<div class="container">
 				
 	$result = mysqli_query($mysqli, $query);
 	
-	include 'customer_functions.php';
-
 	while($row=mysqli_fetch_assoc($result))
     {
 		echo '<tr>
