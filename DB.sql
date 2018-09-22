@@ -13,7 +13,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`)
 );
 
-INSERT INTO `users` (`firstname`, `lastname`, `username`, `password`, `mobileno`, `email`,`group`) VALUES ('fname', 'lname', 'test', '098f6bcd4621d373cade4e832627b4f6', '00000000', 'test@example.com','customer'); 
+INSERT INTO `users` (`firstname`, `lastname`, `username`, `password`, `mobileno`, `email`,`group`) VALUES ('fname', 'lname', 'test', '098f6bcd4621d373cade4e832627b4f6', '00000000', 'test@example.com','Customer'); 
 
 CREATE TABLE `booking` (
   `booking_id` INT NOT NULL AUTO_INCREMENT,

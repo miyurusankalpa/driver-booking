@@ -27,7 +27,7 @@ header('Content-Type: application/json');
 				
 				//set cookies
 				$array["result"] = "success";
-				$array["group"] = $row["group"];
+				$array["group"] = ucfirst($row["group"]);
 				$array["message"] = "Logged In";
 			}
 		}
