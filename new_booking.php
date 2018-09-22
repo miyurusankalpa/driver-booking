@@ -2,7 +2,8 @@
 	include 'header.php';
 ?>
 <div class="card card-body bg-light">
-    <h2 class="text-center">Booking Details</h2>
+
+    <h2 class="text-center">Book New Trip</h2>
 	<hr>
      <form>	   
        <div class="form-group row">
@@ -34,10 +35,12 @@
 	   </div>
 		   
           <div class="input-group">
-          	   <button type="submit" id="submit" name="Register" class="btn btn-block btn-success">Submit</button>
+          	   <button type="submit" id="submit" name="Register" class="btn btn-block btn-success">Book new trip</button>
           </div>
-          <br><div id="booking_status"></div>
- </form></div>
+          <br><div id="booking_status" class="text-center"></div>
+ </form>
+ <a href="/customer.php" class="btn btn-info">Back to dashboard</a>
+ </div>
  
  <script type="text/javascript">
 j(document).ready(function () {

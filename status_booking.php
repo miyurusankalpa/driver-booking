@@ -10,7 +10,6 @@
 //error
 	include 'header.php'; 	
 	include_once 'mysqli.php';
-	include 'customer_functions.php';
 
 	echo '<div class="card card-body bg-light text-center">';
 
@@ -32,11 +31,13 @@
 			$dest =  $row["destination"].", Sri Lanka";
 			
 			echo '<b>Pickup </b><br>'.$pickup; echo "<br>";
-			echo '<b>Destination </b><br>'.$dest; echo "<br>";
+			echo '<b>Destination </b><br>'.$dest; echo "<br><br>";
 			
 			echo '<b>Booking Status </b><br>'.booking_status2text($row["status"]); echo "<br>";
+			echo '<b>Booked </b><br>'.time_elapsed($row["booking_time"]); echo "<br><br>";
 			
-			echo '<b>Driver </b><br> N/A'; echo "<br>";
+			echo '<b>Time to pickup </b><br>'.time_elapsed($row["date"].$row["time"]); echo "<br>";
+			echo '<b>Driver </b><br>'.get_fullname($row["driver_id"]); echo "<br>";
 			
 			echo '</div><div class="col">';
 			
