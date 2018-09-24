@@ -58,7 +58,7 @@
           </div>
 		  <p class="text-center">
 		      If you have already registered <a href="/login.php">Sign in</a>
-		  </p> <br> <div id="reg_status"></div>
+		  </p> <br> <div class="text-center" id="reg_status"></div>
 	    </fieldset>
  </form></div>
 
