@@ -17,7 +17,7 @@
 		
 		if(!isset($mysqli)) $mysqli = new mysqli($server, $user, $pass, $db);
 		
-		$query = "SELECT * FROM `booking` WHERE `booking_id` = ".$_GET["id"];
+		$query = "SELECT b.*, m.pickup as pickup_l, m.destination as dest_l, m.distance, m.duration FROM `booking` b, `maps_location` m WHERE b.`booking_id` = ".$_GET["id"]." AND b.`booking_id`=m.`booking_id`";
 					
 		$row = mysqli_fetch_assoc(mysqli_query($mysqli, $query));
 		
@@ -27,11 +27,14 @@
 			
 			echo '<div class="row"><div class="col">';
 			
-			$pickup =  $row["pickup"].", Sri Lanka";
-			$dest =  $row["destination"].", Sri Lanka";
+			$pickup =  $row["pickup"];
+			$dest =  $row["destination"];
 			
-			echo '<b>Pickup </b><br>'.$pickup; echo "<br>";
-			echo '<b>Destination </b><br>'.$dest; echo "<br><br>";
+			echo '<b>Pickup </b><br>'.$row["pickup_l"]; echo "<br>";
+			echo '<b>Destination </b><br>'.$row["dest_l"]; echo "<br><br>";
+			
+			echo '<b>Estimated duration </b><br>'.secondsToTime($row["duration"]); echo "<br>";
+			echo '<b>Estimated distance </b><br>'.distance2readable($row["distance"]); echo "<br><br>";
 			
 			echo '<b>Booking Status </b><br>'.booking_status2text($row["status"]); echo "<br>";
 			echo '<b>Booked </b><br>'.time_elapsed($row["booking_time"]); echo "<br><br>";
@@ -43,9 +46,9 @@
 			
 			//echo '<button class="btn btn-info">Load Map</button>';
 			
-			/*echo '<div class="embed-responsive embed-responsive-16by9">
+			echo '<div class="embed-responsive embed-responsive-16by9">
 			<iframe src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAVBiTDLtz6mIP1cEF-MFWClav9hPVJzYw&origin='.urlencode($pickup).'&destination='.urlencode($dest).'&avoid=highways" width="896" height="504" frameborder="0" >
-			</ifram></div>';*/
+			</ifram></div>';
 			
 			echo '</div></div>';
 		
