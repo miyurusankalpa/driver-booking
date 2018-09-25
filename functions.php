@@ -65,4 +65,48 @@ function time_elapsed($time,$rt=false)
         $period =  $periods[$j] . ($difference >1 ? 's' :'');
         return "{$difference} {$period} {$tense}";
 }
+function secondsToTime($inputSeconds) {
+    $secondsInAMinute = 60;
+    $secondsInAnHour = 60 * $secondsInAMinute;
+    $secondsInADay = 24 * $secondsInAnHour;
+
+    // Extract days
+    $days = floor($inputSeconds / $secondsInADay);
+
+    // Extract hours
+    $hourSeconds = $inputSeconds % $secondsInADay;
+    $hours = floor($hourSeconds / $secondsInAnHour);
+
+    // Extract minutes
+    $minuteSeconds = $hourSeconds % $secondsInAnHour;
+    $minutes = floor($minuteSeconds / $secondsInAMinute);
+
+    // Extract the remaining seconds
+    $remainingSeconds = $minuteSeconds % $secondsInAMinute;
+    $seconds = ceil($remainingSeconds);
+
+    // Format and return
+    $timeParts = [];
+    $sections = [
+        'day' => (int)$days,
+        'hour' => (int)$hours,
+        'minute' => (int)$minutes,
+       // 'second' => (int)$seconds,
+    ];
+
+    foreach ($sections as $name => $value){
+        if ($value > 0){
+            $timeParts[] = $value. ' '.$name.($value == 1 ? '' : 's');
+        }
+    }
+
+    return implode(', ', $timeParts);
+}
+function distance2readable($meters)
+{
+	if($meters<100)
+		return $meters." m";
+	else
+		return ($meters/1000)." km";
+}
 ?>
