@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `booking`;
+DROP TABLE IF EXISTS `maps_location`;
 
 CREATE TABLE `users` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
@@ -29,3 +30,13 @@ CREATE TABLE `booking` (
   `status` INT NULL DEFAULT '0',
   PRIMARY KEY (`booking_id`)
 );
+
+
+CREATE TABLE `maps_location` (
+  `id` int(11) NOT NULL,
+  `booking_id` int(11) NOT NULL,
+  `pickup` text NOT NULL,
+  `destination` text NOT NULL,
+  `distance` int(10) NOT NULL,
+  `duration` int(20) NOT NULL
+)
