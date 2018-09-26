@@ -23,8 +23,8 @@ echo '<div class="container">
   
   include_once 'mysqli.php';
   if(!isset($mysqli)) $mysqli = new mysqli($server, $user, $pass, $db);
-	
-  $query = "SELECT * FROM `booking` WHERE `driver_id` = ".$_COOKIE['user'];
+
+  $query = "SELECT b.booking_id, b.date, m.pickup, m.destination, b.status FROM `booking` b, `maps_location` m WHERE b.`driver_id` = ".$_COOKIE['user']." AND b.`booking_id`=m.`booking_id`";
 				
 	$result = mysqli_query($mysqli, $query);
 
