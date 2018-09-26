@@ -7,6 +7,27 @@ $error = array();
 
 $sql =new mysqli($server, $user, $pass, $db);
 
+
+if (isset($_POST['cancel_booking'])) {
+	$bid = mysqli_real_escape_string($sql, $_POST['booking_id']);
+
+	$query = "UPDATE booking SET status=9 WHERE user_id='".$_COOKIE["user"]."' AND booking_id='".$bid."'";
+
+	$b = mysqli_query($sql, $query);
+	
+	if($b) 
+	{ 
+		$array["result"] = "success";
+		$array["message"] = "Booking Cancelled.";
+	} else {
+		$array["result"] = "error";
+		$array["message"] = "Booking cancelling failed.";
+	}
+
+	goto output;
+}
+
+
 if (isset($_POST['customer'])) {
 	
 	$date = mysqli_real_escape_string($sql, $_POST['date']);

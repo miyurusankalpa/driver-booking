@@ -9,7 +9,8 @@ echo '<div class="container">
 	<a href="/new_booking.php" class="btn btn-info">Book new trip</a>
 	
 <br><br>
-
+<div id="msg_status"></div>
+<br>
 <table class="table">
   <thead>
     <tr>
@@ -36,10 +37,10 @@ echo '<div class="container">
 		  <td>'.$row['date'].'</td>
 		  <td>'.$row['pickup'].'</td>
 		  <td>'.$row['destination'].'</td>
-		  <td>'.booking_status2text($row['status']).' 
+		  <td id="bo_status'.$row['booking_id'].'">'.booking_status2text($row['status']).' 
 			<div class="btn-group float-right" role="group">
 				<a href="status_booking.php?id='.$row['booking_id'].'" class="btn btn-secondary btn-success">status</a>
-				<a href="#" class="btn btn-secondary btn-danger">cancel</a>
+				<a href="#" id="cancel_btn" data-booking-id="'.$row['booking_id'].'" class="btn btn-secondary btn-danger">cancel</a>
 			</div>
 			</td>
 		</tr>';
@@ -48,7 +49,40 @@ echo '<div class="container">
 echo '</tbody>
 </table>
 
-</div>';
+</div>'; ?>
 
+<script type="text/javascript">
+j(document).ready(function () {
+    j('#cancel_btn').click(function (e) {
+
+	e.preventDefault();
+
+	var bid = j(this).data("booking-id");
+
+	j.ajax({
+	   type: "POST",
+	   dataType: 'json',
+	   url: "new_booking_process.php",
+	   data: 'booking_id='+ bid +'&cancel_booking=true&json=true',
+	   cache: false,
+	   success: function(data){
+				if(data.result=="error"){
+					j("#msg_status").html('<div class="alert alert-warning">'+ data.message +'</div>').fadeIn("slow").delay(5000).fadeOut("slow");
+				}
+				if(data.result=="success"){
+					j("#msg_status").html('<div class="alert alert-success">'+ data.message +'</div>').fadeIn("slow").delay(5000).fadeOut("slow");
+					j("#bo_status"+bid).fadeOut("slow").html('Cancelled Booking').fadeIn("slow");
+				}
+			},
+		error: function(jqXHR,error, errorThrown){
+			j("#msg_status").html('<div class="alert alert-danger">OH! :O There was a unexpected error :(</div>').fadeIn("slow").delay(5000).fadeOut("slow");
+			j('input').attr('disabled', false);
+		}
+		});
+	});
+});
+</script>
+
+<?php
 	include 'footer.php';
 ?>

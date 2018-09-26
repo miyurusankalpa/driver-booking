@@ -7,7 +7,10 @@ function booking_status2text($status)
 			$status_t = "New Booking";
 			break;
 		case 1;
-			$status_t = "Booked2";
+			$status_t = "Booked";
+			break;
+		case 9;
+			$status_t = "Cancelled Booking";
 			break;
 	}
 	
