@@ -33,10 +33,11 @@ CREATE TABLE `booking` (
 
 
 CREATE TABLE `maps_location` (
-  `id` int(11) NOT NULL,
+  `map_id` int(11) NOT NULL AUTO_INCREMENT,
   `booking_id` int(11) NOT NULL,
   `pickup` text NOT NULL,
   `destination` text NOT NULL,
   `distance` int(10) NOT NULL,
-  `duration` int(20) NOT NULL
-)
+  `duration` int(20) NOT NULL,
+  PRIMARY KEY (`map_id`)
+);

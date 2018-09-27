@@ -118,6 +118,7 @@ j(document).ready(function () {
 					j("#booking_status").html('<div class="alert alert-success">'+ data.message +'</div>').fadeIn("slow");
 					j("input#pickt").val(data.address.pickup);
 					j("input#destt").val(data.address.destination);
+					j('#submit').attr('disabled', true);
 				}
 			},
 		error: function(jqXHR,error, errorThrown){
