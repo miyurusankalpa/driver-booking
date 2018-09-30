@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `booking`;
 DROP TABLE IF EXISTS `maps_location`;
+DROP TABLE IF EXISTS `driver_times`;
 
 CREATE TABLE `users` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
@@ -11,12 +12,13 @@ CREATE TABLE `users` (
   `mobileno` INT(10) NULL,
   `email` VARCHAR(45) NULL,
   `group` VARCHAR(45) NULL,
+  `status` INT(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`)
 );
 
-INSERT INTO `users` (`firstname`, `lastname`, `username`, `password`, `mobileno`, `email`,`group`) VALUES ('John', 'Doe', 'test1', '098f6bcd4621d373cade4e832627b4f6', '00000000', 'customer@example.com','Customer'); 
-INSERT INTO `users` (`firstname`, `lastname`, `username`, `password`, `mobileno`, `email`,`group`) VALUES ('John', 'the Driver', 'test2', '098f6bcd4621d373cade4e832627b4f6', '00000000', 'driver@example.com','Driver'); 
-INSERT INTO `users` (`firstname`, `lastname`, `username`, `password`, `mobileno`, `email`,`group`) VALUES ('Admin', 'Istrator', 'admin', '098f6bcd4621d373cade4e832627b4f6', '00000000', 'admin@example.com','Admin'); 
+INSERT INTO `users` (`firstname`, `lastname`, `username`, `password`, `mobileno`, `email`,`group`,`status`) VALUES ('John', 'Doe', 'test1', '098f6bcd4621d373cade4e832627b4f6', '00000000', 'customer@example.com','Customer',1); 
+INSERT INTO `users` (`firstname`, `lastname`, `username`, `password`, `mobileno`, `email`,`group`,`status`) VALUES ('John', 'the Driver', 'test2', '098f6bcd4621d373cade4e832627b4f6', '00000000', 'driver@example.com','Driver',1); 
+INSERT INTO `users` (`firstname`, `lastname`, `username`, `password`, `mobileno`, `email`,`group`,`status`) VALUES ('Admin', 'Istrator', 'admin', '098f6bcd4621d373cade4e832627b4f6', '00000000', 'admin@example.com','Admin',1); 
 
 CREATE TABLE `booking` (
   `booking_id` INT NOT NULL AUTO_INCREMENT,
@@ -40,4 +42,13 @@ CREATE TABLE `maps_location` (
   `distance` int(10) NOT NULL,
   `duration` int(20) NOT NULL,
   PRIMARY KEY (`map_id`)
+);
+
+CREATE TABLE `driver_times` (
+  `time_id` int(11) NOT NULL AUTO_INCREMENT,
+  `driver_id` int NOT NULL,
+  `start` TIMESTAMP NULL DEFAULT NULL;
+  `end` TIMESTAMP NULL DEFAULT NULL;
+  `booking_id` int NOT NULL,
+  PRIMARY KEY (`time_id`)
 );
