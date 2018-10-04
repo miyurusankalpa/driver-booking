@@ -9,6 +9,18 @@ function booking_status2text($status)
 		case 1;
 			$status_t = "Booked";
 			break;
+		case 2;
+			$status_t = "Driver Accepted";
+			break;
+		case 3;
+			$status_t = "Driver On the Way";
+			break;
+		case 4;
+			$status_t = "Trip Started";
+			break;
+		case 5;
+			$status_t = "Trip Complete";
+			break;
 		case 9;
 			$status_t = "Cancelled Booking";
 			break;

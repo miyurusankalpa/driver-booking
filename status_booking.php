@@ -15,9 +15,21 @@
 		if(!empty($row['booking_id'])) {
 			
 			echo '<h1>Booking #'.$row['booking_id'].'</h1><hr>';
+	
+			if(($_SESSION["group"]=="Driver") AND ($row['status']<5)) {
+				echo '<div id="msg_status"></div><div class="row"><div class="col"><h2>Manage Booking</h2></div>
+				<div class="col"> 
+				<div class="btn-group text-center" role="group">';
+				if($row['status']<2) echo '<a href="#" id="accept_btn" data-booking-id="'.$row['booking_id'].'" class="btn btn-secondary btn-warning manage">Accept Booking</a>';
+				if($row['status']<3) echo '<a href="#" id="on_the_way_btn" data-booking-id="'.$row['booking_id'].'" class="btn btn-secondary btn-info manage">On the Way</a>';
+				if($row['status']<4) echo '<a href="#" id="start_btn" data-booking-id="'.$row['booking_id'].'" class="btn btn-secondary btn-info manage">Mark as started</a>';
+				if($row['status']<5) echo '<a href="#" id="complete_btn" data-booking-id="'.$row['booking_id'].'" class="btn btn-secondary btn-success manage">Mark as complete</a>';
+				echo'</div>
+			</div></div><hr>';
+			}
 			
 			echo '<div class="row"><div class="col">';
-			
+
 			$pickup =  $row["pickup"];
 			$dest =  $row["destination"];
 			
@@ -37,9 +49,9 @@
 			
 			//echo '<button class="btn btn-info">Load Map</button>';
 			
-			echo '<div class="embed-responsive embed-responsive-16by9">
+			/*echo '<div class="embed-responsive embed-responsive-16by9">
 			<iframe src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAVBiTDLtz6mIP1cEF-MFWClav9hPVJzYw&origin='.urlencode($pickup).'&destination='.urlencode($dest).'&avoid=highways" width="896" height="504" frameborder="0" >
-			</ifram></div>';
+			</ifram></div>';*/
 			
 			echo '</div></div>';
 		
@@ -49,5 +61,41 @@
 	
 	echo '</div>';
 
+?>
+
+<script type="text/javascript">
+j(document).ready(function () {
+    j('.manage').click(function (e) {
+
+	e.preventDefault();
+
+	var bid = j(this).data("booking-id");
+	var btnid = j(this).attr("id");
+	
+	j.ajax({
+	   type: "POST",
+	   dataType: 'json',
+	   url: "booking_manage_process.php",
+	   data: 'booking_id='+ bid +'&'+btnid+'=true&json=true',
+	   cache: false,
+	   success: function(data){
+				if(data.result=="error"){
+					j("#msg_status").html('<div class="alert alert-warning">'+ data.message +'</div>').fadeIn("slow").delay(5000).fadeOut("slow");
+				}
+				if(data.result=="success"){
+					j("#msg_status").html('<div class="alert alert-success">'+ data.message +'</div>').fadeIn("slow").delay(5000).fadeOut("slow");
+					j(this).prop('disabled', true);;
+				}
+			},
+		error: function(jqXHR,error, errorThrown){
+			j("#msg_status").html('<div class="alert alert-danger">OH! :O There was a unexpected error :(</div>').fadeIn("slow").delay(5000).fadeOut("slow");
+			j('input').attr('disabled', false);
+		}
+		});
+	});
+});
+</script>
+
+<?php
 	include 'footer.php';
 ?>
