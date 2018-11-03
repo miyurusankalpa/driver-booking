@@ -100,7 +100,7 @@ j(document).ready(function () {
 				}
 			},
 		error: function(jqXHR,error, errorThrown){
-			j("#dreg_status").html('<div class="alert alert-danger">OH! :O There was a unexpected error :(</div>').fadeIn("slow");
+			j("#areg_status").html('<div class="alert alert-danger">OH! :O There was a unexpected error :(</div>').fadeIn("slow");
 			j('input').attr('disabled', false);
 		}
 		});
