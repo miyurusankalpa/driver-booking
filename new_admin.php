@@ -56,7 +56,7 @@
 	   </div>
 
           <div class="form-group row">
-          	   <button type="submit" name="Register" id="dreg_button" class="btn btn-success btn-block">Submit</button>
+          	   <button type="submit" name="Register" id="Areg_button" class="btn btn-success btn-block">Submit</button>
           </div>
 		<br> <div class="text-center" id="dreg_status"></div>
 	    </fieldset>
@@ -87,7 +87,7 @@ j(document).ready(function () {
 	j.ajax({
 	   type: "POST",
 	   dataType: 'json',
-	   url: "new_drivers_process.php",
+	   url: "new_admin_process.php",
 	   data: 'Firstname='+ firstname +'&Lastname='+ lastname +'&username='+ username +'&Email='+ email +'&password='+ password +'&Conpassword='+ conpasswd +'&mobileNo='+ mobileNo +'&register=true&json=true',
 	   cache: false,
 	   success: function(data){
