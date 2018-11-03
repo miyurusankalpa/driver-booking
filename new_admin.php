@@ -92,11 +92,11 @@ j(document).ready(function () {
 	   cache: false,
 	   success: function(data){
 				if(data.result=="error"){
-					j("#dreg_status").html('<div class="alert alert-warning">'+ data.message +'</div>').fadeIn("slow");
+					j("#areg_status").html('<div class="alert alert-warning">'+ data.message +'</div>').fadeIn("slow");
 					j('input').attr('disabled', false);
 				}
 				if(data.result=="success"){
-					j("#dreg_status").html('<div class="alert alert-success">'+ data.message +'</div>').fadeIn("slow");
+					j("#areg_status").html('<div class="alert alert-success">'+ data.message +'</div>').fadeIn("slow");
 				}
 			},
 		error: function(jqXHR,error, errorThrown){
