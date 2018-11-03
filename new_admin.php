@@ -56,9 +56,9 @@
 	   </div>
 
           <div class="form-group row">
-          	   <button type="submit" name="Register" id="Areg_button" class="btn btn-success btn-block">Submit</button>
+          	   <button type="submit" name="Register" id="areg_button" class="btn btn-success btn-block">Submit</button>
           </div>
-		<br> <div class="text-center" id="dreg_status"></div>
+		<br> <div class="text-center" id="areg_status"></div>
 	    </fieldset>
  </form>
  <a href="/admin.php" class="btn btn-info">Back to dashboard</a>
@@ -66,7 +66,7 @@
  
 <script type="text/javascript">
 j(document).ready(function () {
-    j('#dreg_button').click(function (e) {
+    j('#areg_button').click(function (e) {
 
 	e.preventDefault();
 
