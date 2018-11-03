@@ -61,7 +61,7 @@ header('Content-Type: application/json');
 					goto output;
 				} else {
 					//echo mysqli_error($sql);
-					array_push($error, "Error adding date to the database. Try again");
+					array_push($error, "Error adding data to the database. Try again");
 				}
 			}			
 	} else array_push($error, "Empty Data.");
