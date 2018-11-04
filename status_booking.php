@@ -49,9 +49,9 @@
 			
 			//echo '<button class="btn btn-info">Load Map</button>';
 			
-			/*echo '<div class="embed-responsive embed-responsive-16by9">
+			echo '<div class="embed-responsive embed-responsive-16by9">
 			<iframe src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAVBiTDLtz6mIP1cEF-MFWClav9hPVJzYw&origin='.urlencode($pickup).'&destination='.urlencode($dest).'&avoid=highways" width="896" height="504" frameborder="0" >
-			</ifram></div>';*/
+			</ifram></div>';
 			
 			echo '</div></div>';
 		
