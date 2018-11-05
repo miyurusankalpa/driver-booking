@@ -33,7 +33,6 @@ CREATE TABLE `booking` (
   PRIMARY KEY (`booking_id`)
 );
 
-
 CREATE TABLE `maps_location` (
   `map_id` int(11) NOT NULL AUTO_INCREMENT,
   `booking_id` int(11) NOT NULL,
@@ -46,9 +45,20 @@ CREATE TABLE `maps_location` (
 
 CREATE TABLE `driver_times` (
   `time_id` int(11) NOT NULL AUTO_INCREMENT,
-  `driver_id` int NOT NULL,
-  `start` TIMESTAMP NULL DEFAULT NULL;
-  `end` TIMESTAMP NULL DEFAULT NULL;
-  `booking_id` int NOT NULL,
+  `driver_id` int(11) NOT NULL,
+  `start` TIMESTAMP NULL DEFAULT NULL,
+  `end` TIMESTAMP NULL DEFAULT NULL,
+  `booking_id` int(11) NOT NULL,
   PRIMARY KEY (`time_id`)
+);
+
+CREATE TABLE `billing` (
+  `bill_id` int(11) NOT NULL AUTO_INCREMENT,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `trip_id` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `discount` int(11) NOT NULL,
+  `status` int(2) NOT NULL,
+   PRIMARY KEY (`bill_id`)
 );

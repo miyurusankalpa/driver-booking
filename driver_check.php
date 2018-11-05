@@ -1,6 +1,6 @@
 <?php
 
-$booking_id = $_GET["id"];
+//$booking_id = $_GET["id"];
 
 include_once 'mysqli.php';
 
@@ -8,7 +8,7 @@ include_once 'mysqli.php';
 $sql = new mysqli($server, $user, $pass, $db);
 
 //get booking details
-$query = "SELECT b.*, m.distance, m.duration FROM `booking` b, `maps_location` m WHERE b.`booking_id` = ".$booking_id." AND b.`booking_id`=m.`booking_id` LIMIT 1";
+$query = "SELECT b.*, m.distance, m.duration FROM `booking` b, `maps_location` m WHERE b.status=0 AND b.`booking_id`=m.`booking_id` LIMIT 1";
 
 $row = mysqli_fetch_assoc(mysqli_query($sql, $query));
 
@@ -37,7 +37,7 @@ while($row = mysqli_fetch_assoc($result)) {
 	
 		$result = mysqli_query($sql, $query);
 		
-		$query = "UPDATE `booking` SET `driver_id`='".$driverid."' WHERE `booking_id`='".$booking_id."'";
+		$query = "UPDATE `booking` SET `driver_id`='".$driverid."',`status`='1' WHERE `booking_id`='".$booking_id."'";
 	
 		$result = mysqli_query($sql, $query);
 		die("Success");

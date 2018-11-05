@@ -13,7 +13,7 @@ echo '<div class="container">
 	<a href="/view_bookings.php" class="btn btn-info">view bookings</a>
 	<a href="/view_drivers.php" class="btn btn-info">view drivers</a>
 	
-	<a href="#" class="btn btn-info">monthly report</a>
+	<a href="/monthly_report.php" class="btn btn-info">monthly report</a>
 	
 <br><br>
 
