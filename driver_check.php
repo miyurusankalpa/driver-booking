@@ -3,6 +3,7 @@
 //$booking_id = $_GET["id"];
 
 include_once 'mysqli.php';
+include_once 'functions.php';
 
 // connecting to database
 $sql = new mysqli($server, $user, $pass, $db);
@@ -40,6 +41,14 @@ while($row = mysqli_fetch_assoc($result)) {
 		$query = "UPDATE `booking` SET `driver_id`='".$driverid."',`status`='1' WHERE `booking_id`='".$booking_id."'";
 	
 		$result = mysqli_query($sql, $query);
+		
+		include_once 'mail.php';
+		$r = mysqli_fetch_assoc(mysqli_query($sql, "SELECT * FROM `booking` b, users u WHERE `booking_id` = '".$booking_id."'  AND u.user_id=b.user_id"));
+
+		$addii = "Driver : ".get_fullname($r["driver_id"])."<br>Status : ".booking_status2text($r['status'],1)."";
+		sendmailbymailgun($r['email'],$r['username'],"Bookings","bookings@chauffeurlk.com","Booking #".$r['booking_id']." Status ".booking_status2text($r['status'],1)."",booking_mail($r['firstname']." ".$r['lastname'],$r['booking_id'],$addii),"admin@chauffeurlk.com");
+		//drivercopy and driversms
+		
 		die("Success");
 	}
 }

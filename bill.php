@@ -8,7 +8,7 @@
 		
 		if(!isset($mysqli)) $mysqli = new mysqli($server, $user, $pass, $db);
 		
-		$query = "SELECT * FROM `billing` WHERE `bill_id` = ".$_GET["id"]."";
+		$query = "SELECT *, d.start, d.end FROM `billing` bi, booking bo, `driver_times` d WHERE bo.`booking_id`=d.`booking_id` AND bi.`bill_id` = ".$_GET["id"]." and bi.trip_id=bo.booking_id";
 					
 		$row = mysqli_fetch_assoc(mysqli_query($mysqli, $query));
 		
@@ -17,12 +17,21 @@
 			echo '<h1>Bill #'.$row['bill_id'].'</h1><hr>';
 	
 			echo '<div class="row"><div class="col">';
+			$start_timestamp = strtotime($row["start"]);
+			$end_timestamp = strtotime($row["end"]);
+
+			$duration = $end_timestamp - $start_timestamp;
+
 	
 			echo '<h2>'.$row["amount"].' LKR</h2>'; echo "<br>";
-				
-			echo '</div>';
+			echo '<h3>'.$row["pickup"].'</h3>'; echo "<br>";
+			echo '<h3>'.$row["destination"].'</h3>'; echo "<br>";
+			
+			echo '<h3>'.secondsToTime($duration).'</h3>'; echo "<br>";
+
+			echo '<a href="#" class="btn btn-info d-print-none" onclick="window.print()">Print</a></div>';
 		
-		} else echo 'No such Booking';
+		} else echo 'No such bill';
 	
 	} else echo 'Empty ID';
 	

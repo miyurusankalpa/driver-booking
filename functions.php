@@ -1,41 +1,51 @@
 <?php include_once 'mysqli.php';
-function booking_status2text($status)
+function booking_status2text($status,$t=1)
 {
 	switch($status)
 	{
 		case 0;
 			$status_t = "New Booking";
+			$status_b = "light";
 			break;
 		case 1;
 			$status_t = "Driver Booked";
+			$status_b = "info";
 			break;
 		case 2;
 			$status_t = "Vehicle Booked";
+			$status_b = "info";
 			break;
 		case 3;
 			$status_t = "Driver Accepted";
+			$status_b = "primary";
 			break;
 		case 4;
 			$status_t = "Driver On the Way";
+			$status_b = "info";
 			break;
 		case 5;
 			$status_t = "Trip Started";
+			$status_b = "dark";
 			break;
 		case 6;
 			$status_t = "Trip Complete";
+			$status_b = "success";
 			break;
 		case 7;
 			$status_t = "Payment Pending";
+			$status_b = "warning";
 			break;
 		case 8;
 			$status_t = "Payment Complete";
+			$status_b = "success";
 			break;
 		case 9;
 			$status_t = "Cancelled Booking";
+			$status_b = "danger";
 			break;
 	}
 	
-	return $status_t;
+	if($t==1) return $status_t; else return $status_b;
 }
 function get_fullname($uid)
 {	
@@ -132,5 +142,38 @@ function distance2readable($meters)
 		return $meters." m";
 	else
 		return ($meters/1000)." km";
+}
+function booking_mail($name,$bid,$add){
+	$html = '<tr>
+                <td class="wrapper" style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;">
+                  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
+                    <tr>
+                      <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;text-align: center;">
+					  <img src="https://chauffeurlk.com/images/logo.png" height="100px"><br><br>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Hello '.$name.'</p>
+						<p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;"><br>Trip ID : '.$bid.' <br>'.$add.'<br></p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Your booking status has been updated. To view the lastest status and more infomataion about the booking click the button below.</p>
+                        <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
+                          <tbody>
+                            <tr>
+                              <td align="center" style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding-bottom: 15px;">
+                                <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;">
+                                  <tbody>
+                                    <tr>
+                                      <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; background-color: #3498db; border-radius: 5px; text-align: center;"> <a href="https://chauffeurlk.com/status_booking.php?id='.$bid.'" target="_blank" style="display: inline-block; color: #ffffff; background-color: #3498db; border: solid 1px #3498db; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-color: #3498db;">Booking status</a> </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Thanks for using chauffeurlk.</p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>';
+	return $html;
 }
 ?>

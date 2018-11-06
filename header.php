@@ -52,3 +52,16 @@ if(isset($_COOKIE["user"])) session_start();  ?>
 	</nav>
  </header>
  <main role="main" class="container">
+ <?php
+ if(!isset($notloggedin)){
+	 	if(!isset($_COOKIE["user"]))
+	{
+		echo '<div class="container">
+		<h2 class="alert alert-danger">You have to login to access this page</h2><br>
+		</div>';
+		include 'footer.php'; die;
+	}
+ }
+ 
+ 
+ ?>

@@ -2,7 +2,8 @@
 
 header('Content-Type: application/json');
 include_once 'mysqli.php';
-	
+include_once 'functions.php';
+
 $error = array();
 
 $sql =new mysqli($server, $user, $pass, $db);
@@ -19,6 +20,13 @@ if (isset($_POST['cancel_booking'])) {
 	{ 
 		$array["result"] = "success";
 		$array["message"] = "Booking Cancelled.";
+		
+		include_once 'mail.php';
+		$r = mysqli_fetch_assoc(mysqli_query($sql, "SELECT * FROM `booking` b, users u WHERE `booking_id` = '".$bid."'  AND u.user_id=b.user_id"));
+
+		$addii = "Pickup : ".$r['pickup']."<br>Destination : ".$r['destination']." <br>Status : ".booking_status2text($r['status'],1)."";
+		sendmailbymailgun($r['email'],$r['username'],"Bookings","bookings@chauffeurlk.com","Booking #".$r['booking_id']." Status ".booking_status2text($r['status'],1)."",booking_mail($r['firstname']." ".$r['lastname'],$r['booking_id'],$addii),"admin@chauffeurlk.com");
+						
 	} else {
 		$array["result"] = "error";
 		$array["message"] = "Booking cancelling failed.";
@@ -78,6 +86,12 @@ if (isset($_POST['customer'])) {
 					$array["address"]["pickup"] = $pickupl;
 					$array["address"]["destination"] = $destl;
 					
+						include_once 'mail.php';
+						$r = mysqli_fetch_assoc(mysqli_query($sql, "SELECT * FROM `booking` b, users u WHERE `booking_id` = '".$bookingid."'  AND u.user_id=b.user_id"));
+	
+						$addii = "Pickup : ".$r['pickup']."<br>Destination : ".$r['destination']." <br>Status : ".booking_status2text($r['status'],1)."";
+						sendmailbymailgun($r['email'],$r['username'],"Bookings","bookings@chauffeurlk.com","Booking #".$r['booking_id']." Status ".booking_status2text($r['status'],1)."",booking_mail($r['firstname']." ".$r['lastname'],$r['booking_id'],$addii),"admin@chauffeurlk.com");
+						
 					$array["result"] = "success";
 					$array["message"] = "Booking Successful.";
 					goto output;

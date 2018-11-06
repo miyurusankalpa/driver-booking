@@ -1,5 +1,18 @@
 <?php
 	include 'header.php';
+	
+	if(!isset($_COOKIE["user"]))
+	{
+		echo '<div class="container">
+		<h2 class="alert alert-danger">You have to login to access this page</h2><br>
+		</div>';
+		include 'footer.php'; die;
+	} else if(@$_SESSION["group"]!=="Customer") {
+		echo '<div class="container">
+		<h2 class="alert alert-danger">You are no authorized to access this page</h2><br>
+		</div>';;
+		include 'footer.php'; die;
+	}
 ?>
 <div class="card card-body bg-light">
 
@@ -9,7 +22,7 @@
        <div class="form-group row">
           	<label class="col-sm-3 col-form-label">Select the date</label>
 			<div class="col-sm-9">
-				<input type="date" class="form-control" name="date">
+				<input type="date" class="form-control" name="date" min="<?php echo date('Y-m-d',strtotime("+1 day")); ?>">
 			</div>  
 	   </div>
 	   
@@ -33,7 +46,7 @@
 				<input type="text" class="form-control" id="destt" name="destination">
 			</div>  
 	   </div>
-	   <div class="btn btn-block btn-primary" id="mapbtn">pick and on map</div>
+	   <div class="btn btn-block btn-primary" id="mapbtn">pick pickup and destination on map</div>
 
 	   
 	   <div id="googleMap" style="width:100%;height:300px;display:none;">test</div>

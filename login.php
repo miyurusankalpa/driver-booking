@@ -1,4 +1,4 @@
-<?php
+<?php  $notloggedin=true;
 	include 'header.php';
 ?>
 

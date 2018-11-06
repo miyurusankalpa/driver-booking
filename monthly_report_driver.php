@@ -11,7 +11,7 @@
 	  include_once 'mysqli.php';
   if(!isset($mysqli)) $mysqli = new mysqli($server, $user, $pass, $db);
   
- $query2 = "SELECT sum(amount) as rev, count(bill_id) as trips FROM `billing` WHERE `time` BETWEEN '".$month_fd."' AND '".$month_ld."'";
+ $query2 = "SELECT sum(amount) as rev, count(bill_id) as trips FROM `billing` bi, booking bo WHERE bi.`time` BETWEEN '".$month_fd."' AND '".$month_ld."' AND bo.driver_id= '".$_COOKIE['user']."' ";
 
 $result = mysqli_query($mysqli, $query2);
 
@@ -20,11 +20,11 @@ if(!$result) die("Error");
 $row = mysqli_fetch_assoc($result);
 
 echo '<div class="container">
-	<a href="/monthly_report.php?prev" class="btn btn-info">Previous Month</a>
-	<a href="/monthly_report.php" class="btn btn-info">Current Month</a>
+	<a href="/monthly_report_driver.php?prev" class="btn btn-info">Previous Month</a>
+	<a href="/monthly_report_driver.php" class="btn btn-info">Current Month</a>
 	
 	<h1>
-		Monthly Report '.$month.'
+		Monthly Report '.$month.' for '.get_fullname($_COOKIE['user']).'
 	</h1>
 	<br>
 	
@@ -43,7 +43,7 @@ echo '<div class="container">
   </thead>
   <tbody>';
   
-  $query = "SELECT * FROM `billing` WHERE `time` BETWEEN '".$month_fd."' AND '".$month_ld."'";
+  $query = "SELECT * FROM `billing` bi, booking bo WHERE bi.`time` BETWEEN '".$month_fd."' AND '".$month_ld."' AND bo.driver_id= '".$_COOKIE['user']."' ";
 				
 	$result = mysqli_query($mysqli, $query);
 

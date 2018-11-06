@@ -1,5 +1,14 @@
 <?php
 	include 'header.php'; 	
+	
+	if(!isset($_COOKIE["user"]))
+	{
+		echo '<div class="container">
+		<h2 class="alert alert-danger">You have to login to access this page</h2><br>
+		</div>';
+		include 'footer.php'; die;
+	}
+	
 	include_once 'mysqli.php';
 
 	echo '<div class="card card-body bg-light text-center">';
@@ -39,7 +48,7 @@
 			echo '<b>Estimated duration </b><br>'.secondsToTime($row["duration"]); echo "<br>";
 			echo '<b>Estimated distance </b><br>'.distance2readable($row["distance"]); echo "<br><br>";
 			
-			echo '<b>Booking Status </b><br>'.booking_status2text($row["status"]); echo "<br>";
+			echo '<b>Booking Status </b><br><div class="badge badge-'.booking_status2text($row['status'],0).'">'.booking_status2text($row['status'],1).'</div>'; echo "<br>";
 			echo '<b>Booked </b><br>'.time_elapsed($row["booking_time"]); echo "<br><br>";
 			
 			echo '<b>Time to pickup </b><br>'.time_elapsed($row["date"].$row["time"]); echo "<br>";
