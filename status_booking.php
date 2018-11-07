@@ -25,14 +25,16 @@
 			
 			echo '<h1>Booking #'.$row['booking_id'].'</h1><hr>';
 	
-			if(($_SESSION["group"]=="Driver") AND ($row['status']<5)) {
+			if(($_SESSION["group"]=="Driver") AND ($row['status']<8)) {
 				echo '<div id="msg_status"></div><div class="row"><div class="col"><h2>Manage Booking</h2></div>
 				<div class="col"> 
 				<div class="btn-group text-center" role="group">';
-				if($row['status']<2) echo '<a href="#" id="accept_btn" data-booking-id="'.$row['booking_id'].'" class="btn btn-secondary btn-warning manage">Accept Booking</a>';
-				if($row['status']<3) echo '<a href="#" id="on_the_way_btn" data-booking-id="'.$row['booking_id'].'" class="btn btn-secondary btn-info manage">On the Way</a>';
-				if($row['status']<4) echo '<a href="#" id="start_btn" data-booking-id="'.$row['booking_id'].'" class="btn btn-secondary btn-info manage">Mark as started</a>';
-				if($row['status']<5) echo '<a href="#" id="complete_btn" data-booking-id="'.$row['booking_id'].'" class="btn btn-secondary btn-success manage">Mark as complete</a>';
+				if($row['status']<3) echo '<a href="#" id="accept_btn" data-booking-id="'.$row['booking_id'].'" class="btn btn-secondary btn-warning manage">Accept Booking</a>';
+				if($row['status']<4) echo '<a href="#" id="on_the_way_btn" data-booking-id="'.$row['booking_id'].'" class="btn btn-secondary btn-info manage">On the Way</a>';
+				if($row['status']<5) echo '<a href="#" id="start_btn" data-booking-id="'.$row['booking_id'].'" class="btn btn-secondary btn-info manage">Mark as started</a>';
+				if($row['status']<6) echo '<a href="#" id="complete_btn" data-booking-id="'.$row['booking_id'].'" class="btn btn-secondary btn-success manage">Mark as complete</a>';
+				if($row['status']==6) echo '<a href="#" id="make_bill_btn" data-booking-id="'.$row['booking_id'].'" class="btn btn-secondary btn-success manage">Make bill</a>';
+				if($row['status']==7) echo '<a href="#" id="bill_btn" data-booking-id="'.$row['booking_id'].'" class="btn btn-secondary btn-success manage">Payment done</a>';
 				echo'</div>
 			</div></div><hr>';
 			}
@@ -60,7 +62,7 @@
 			
 			echo '<div class="embed-responsive embed-responsive-16by9">
 			<iframe src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAVBiTDLtz6mIP1cEF-MFWClav9hPVJzYw&origin='.urlencode($pickup).'&destination='.urlencode($dest).'&avoid=highways" width="896" height="504" frameborder="0" >
-			</ifram></div>';
+			</iframe></div>';
 			
 			echo '</div></div>';
 		

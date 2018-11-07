@@ -60,5 +60,6 @@ CREATE TABLE `billing` (
   `amount` int(11) NOT NULL,
   `discount` int(11) NOT NULL,
   `status` int(2) NOT NULL,
-   PRIMARY KEY (`bill_id`)
+   PRIMARY KEY (`bill_id`),
+   UNIQUE KEY `trip_id` (`trip_id`);
 );

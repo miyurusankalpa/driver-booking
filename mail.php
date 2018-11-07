@@ -1,7 +1,7 @@
 <?php 
 define('MAILGUN_URL', 'https://api.mailgun.net/v3/chauffeurlk.com');
 
-function sendmailbymailgun($to,$toname,$mailfromname,$mailfrom,$subject,$html,$replyto){
+function sendmailbymailgun($to,$toname,$mailfromname,$mailfrom,$subject,$html,$replyto,$cc=null){
     $array_data = array(
 		'from'=> $mailfromname .'<'.$mailfrom.'>',
 		'to'=>$toname.'<'.$to.'>',
@@ -12,7 +12,9 @@ function sendmailbymailgun($to,$toname,$mailfromname,$mailfrom,$subject,$html,$r
 		'o:tracking-opens'=>'yes',
 		'h:Reply-To'=>$replyto
     );
-
+	
+	if($cc) $array_data['cc'] = $cc;
+		
     $session = curl_init(MAILGUN_URL.'/messages');
     curl_setopt($session, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
   	curl_setopt($session, CURLOPT_USERPWD, 'api:'.MAILGUN_KEY);

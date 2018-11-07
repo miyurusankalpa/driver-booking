@@ -16,18 +16,22 @@
 			
 			echo '<h1>Bill #'.$row['bill_id'].'</h1><hr>';
 	
-			echo '<div class="row"><div class="col">';
 			$start_timestamp = strtotime($row["start"]);
 			$end_timestamp = strtotime($row["end"]);
 
 			$duration = $end_timestamp - $start_timestamp;
 
-	
-			echo '<h2>'.$row["amount"].' LKR</h2>'; echo "<br>";
-			echo '<h3>'.$row["pickup"].'</h3>'; echo "<br>";
-			echo '<h3>'.$row["destination"].'</h3>'; echo "<br>";
+			echo '<h2 class="alert alert-info">'.$row["amount"].' LKR</h2>'; echo "<br>";
 			
-			echo '<h3>'.secondsToTime($duration).'</h3>'; echo "<br>";
+			echo '<div class="row"><div class="col">';
+
+			echo '<h3>Pickme : '.$row["pickup"].'</h3>'; echo "<br>";
+			
+			echo '</div><div class="col">';
+
+			echo '<h3>Destination : '.$row["destination"].'</h3></div></div>'; echo "<br>";
+			
+			echo '<h3>Duration : '.secondsToTime($duration).'</h3>'; echo "<br>";
 
 			echo '<a href="#" class="btn btn-info d-print-none" onclick="window.print()">Print</a></div>';
 		

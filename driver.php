@@ -21,7 +21,7 @@ echo '<div class="container"><div class="jumbotron">
   include_once 'mysqli.php';
   if(!isset($mysqli)) $mysqli = new mysqli($server, $user, $pass, $db);
 
-  $query = "SELECT b.booking_id, b.date, m.pickup, m.destination, b.status FROM `booking` b, `maps_location` m WHERE b.`driver_id` = ".$_COOKIE['user']." AND b.`booking_id`=m.`booking_id` AND b.status < 7";
+  $query = "SELECT b.booking_id, b.date, m.pickup, m.destination, b.status FROM `booking` b, `maps_location` m WHERE b.`driver_id` = ".$_COOKIE['user']." AND b.`booking_id`=m.`booking_id` AND b.status < 8";
 				
 	$result = mysqli_query($mysqli, $query);
 	$row_cnt = mysqli_num_rows($result);

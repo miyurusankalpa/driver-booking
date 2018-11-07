@@ -44,10 +44,13 @@ while($row = mysqli_fetch_assoc($result)) {
 		
 		include_once 'mail.php';
 		$r = mysqli_fetch_assoc(mysqli_query($sql, "SELECT * FROM `booking` b, users u WHERE `booking_id` = '".$booking_id."'  AND u.user_id=b.user_id"));
+		$d = mysqli_fetch_assoc(mysqli_query($sql, "SELECT u.* FROM `booking` b, users u WHERE `booking_id` = '".$booking_id."'  AND u.user_id=b.driver_id"));
 
 		$addii = "Driver : ".get_fullname($r["driver_id"])."<br>Status : ".booking_status2text($r['status'],1)."";
-		sendmailbymailgun($r['email'],$r['username'],"Bookings","bookings@chauffeurlk.com","Booking #".$r['booking_id']." Status ".booking_status2text($r['status'],1)."",booking_mail($r['firstname']." ".$r['lastname'],$r['booking_id'],$addii),"admin@chauffeurlk.com");
-		//drivercopy and driversms
+		sendmailbymailgun($r['email'],$r['username'],"Bookings","bookings@chauffeurlk.com","Booking #".$r['booking_id']." Status ".booking_status2text($r['status'],1)."",booking_mail($r['firstname']." ".$r['lastname'],$r['booking_id'],$addii),"admin@chauffeurlk.com",$d['email']);
+		
+		include_once 'sms.php';
+		sendsms($d['mobileno'],"New Booking, Time : ".$r["date"]." ".$r["time"].", Pickup ".$r["pickup"]."");
 		
 		die("Success");
 	}

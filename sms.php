@@ -6,7 +6,7 @@ function sendsms($to,$msg){
 		'msg'=>$msg
     );
 
-    $session = curl_init('https://localhost/SMS');
+    $session = curl_init('https://beeimg.com/new/sms/SMS');
     curl_setopt($session, CURLOPT_POST, true);
     curl_setopt($session, CURLOPT_POSTFIELDS, $array_data);
     curl_setopt($session, CURLOPT_HEADER, false);
