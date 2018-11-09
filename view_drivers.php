@@ -35,7 +35,7 @@ echo '<div class="container">
 		  <td>'.$row['trips'].'</td>
 		  <td>
 			<div class="btn-group" role="group">
-				<a href="driver_report.php?id='.$row['user_id'].'" class="btn btn-secondary btn-info">View Driver Report</a>
+				<a href="monthly_report_driver.php?id='.$row['user_id'].'" class="btn btn-secondary btn-info">View Driver Report</a>
 			</div>
 			</td>
 		</tr>';

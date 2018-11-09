@@ -10,7 +10,7 @@
 	
 	  include_once 'mysqli.php';
   if(!isset($mysqli)) $mysqli = new mysqli($server, $user, $pass, $db);
-  
+  $_COOKIE["user"]=$_GET['id'];
  $query2 = "SELECT sum(amount) as rev, count(bill_id) as trips FROM `billing` bi, booking bo WHERE bi.`time` BETWEEN '".$month_fd."' AND '".$month_ld."' AND bo.driver_id= '".$_COOKIE['user']."' ";
 
 $result = mysqli_query($mysqli, $query2);

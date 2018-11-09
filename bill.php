@@ -11,6 +11,8 @@
 		$query = "SELECT *, d.start, d.end FROM `billing` bi, booking bo, `driver_times` d WHERE bo.`booking_id`=d.`booking_id` AND bi.`bill_id` = ".$_GET["id"]." and bi.trip_id=bo.booking_id";
 					
 		$row = mysqli_fetch_assoc(mysqli_query($mysqli, $query));
+$bid = $row["booking_id"];
+ $l = mysqli_fetch_assoc(mysqli_query($mysqli, "SELECT pickup,destination FROM `maps_location` WHERE `booking_id` = '".$bid."' "));
 		
 		if(!empty($row['bill_id'])) {
 			
@@ -25,11 +27,11 @@
 			
 			echo '<div class="row"><div class="col">';
 
-			echo '<h3>Pickme : '.$row["pickup"].'</h3>'; echo "<br>";
+			echo '<h3>Pickme : '.$l["pickup"].'</h3>'; echo "<br>";
 			
 			echo '</div><div class="col">';
 
-			echo '<h3>Destination : '.$row["destination"].'</h3></div></div>'; echo "<br>";
+			echo '<h3>Destination : '.$l["destination"].'</h3></div></div>'; echo "<br>";
 			
 			echo '<h3>Duration : '.secondsToTime($duration).'</h3>'; echo "<br>";
 

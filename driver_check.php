@@ -1,5 +1,4 @@
 <?php
-
 //$booking_id = $_GET["id"];
 
 include_once 'mysqli.php';
@@ -12,6 +11,7 @@ $sql = new mysqli($server, $user, $pass, $db);
 $query = "SELECT b.*, m.distance, m.duration FROM `booking` b, `maps_location` m WHERE b.status=0 AND b.`booking_id`=m.`booking_id` LIMIT 1";
 
 $row = mysqli_fetch_assoc(mysqli_query($sql, $query));
+$booking_id = $row["booking_id"];
 
 //check if driver is already assgned
 if($row["driver_id"]!=="0") die("Driver Assigned");
@@ -45,12 +45,16 @@ while($row = mysqli_fetch_assoc($result)) {
 		include_once 'mail.php';
 		$r = mysqli_fetch_assoc(mysqli_query($sql, "SELECT * FROM `booking` b, users u WHERE `booking_id` = '".$booking_id."'  AND u.user_id=b.user_id"));
 		$d = mysqli_fetch_assoc(mysqli_query($sql, "SELECT u.* FROM `booking` b, users u WHERE `booking_id` = '".$booking_id."'  AND u.user_id=b.driver_id"));
+		$l = mysqli_fetch_assoc(mysqli_query($sql, "SELECT pickup FROM `maps_location` WHERE `booking_id` = '".$booking_id."' "));
 
 		$addii = "Driver : ".get_fullname($r["driver_id"])."<br>Status : ".booking_status2text($r['status'],1)."";
-		sendmailbymailgun($r['email'],$r['username'],"Bookings","bookings@chauffeurlk.com","Booking #".$r['booking_id']." Status ".booking_status2text($r['status'],1)."",booking_mail($r['firstname']." ".$r['lastname'],$r['booking_id'],$addii),"admin@chauffeurlk.com",$d['email']);
-		
+		$ema = sendmailbymailgun($r['email'],$r['username'],"Bookings","bookings@chauffeurlk.com","Booking #".$r['booking_id']." Status ".booking_status2text($r['status'],1)."",booking_mail($r['firstname']." ".$r['lastname'],$r['booking_id'],$addii),"admin@chauffeurlk.com",$d['email']);
+			
+		//print_r($ema);		
+
 		include_once 'sms.php';
-		sendsms($d['mobileno'],"New Booking, Time : ".$r["date"]." ".$r["time"].", Pickup ".$r["pickup"]."");
+		$sms = sendsms($d['mobileno'],"New Booking, Time : ".$r["date"]." ".$r["time"].", Pickup : ".$l["pickup"]."");
+		print_r($sms);
 		
 		die("Success");
 	}

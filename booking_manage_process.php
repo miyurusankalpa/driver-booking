@@ -1,28 +1,37 @@
 <?php
 
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//error_reporting(E_ALL);
+
 header('Content-Type: application/json');
 include_once 'mysqli.php';
 include_once 'functions.php';
+include_once 'mail.php';
+include_once 'sms.php';
 
 $error = array();
 
 $sql =new mysqli($server, $user, $pass, $db);
 
 $bid = mysqli_real_escape_string($sql, $_POST['booking_id']);
+$r['booking_id']= $bid;
+$booking_id = $bid;
 
 if (isset($_POST['accept_btn'])) {
 
-	$query = "UPDATE booking SET status='2' WHERE driver_id='".$_COOKIE["user"]."' AND booking_id='".$bid."'";
+	$query = "UPDATE booking SET status='3' WHERE driver_id='".$_COOKIE["user"]."' AND booking_id='".$bid."'";
 
 	$b = mysqli_query($sql, $query);
 	
 	if($b) 
 	{ 
-		$r = mysqli_fetch_assoc(mysqli_query($sql, "SELECT * FROM `booking` b, users u WHERE `booking_id` = '".$bid."'  AND u.user_id=b.user_id"));
+		$r = mysqli_fetch_assoc(mysqli_query($sql, "SELECT b.*,u.email, u.username FROM `booking` b, users u WHERE `booking_id` = '".$bid."'  AND u.user_id=b.user_id"));
 		$d = mysqli_fetch_assoc(mysqli_query($sql, "SELECT u.* FROM `booking` b, users u WHERE `booking_id` = '".$bid."'  AND u.user_id=b.driver_id"));
-
-		$addii = "Pickup : ".$r['pickup']."<br>Destination : ".$r['destination']." <br>Driver : ".$d['firstname']." ".$d['lastname']."<br>Driver mobile number : ".$d['mobileno']." <br>Status : ".booking_status2text($r['status'],1)."";
-		sendmailbymailgun($r['email'],$r['username'],"Bookings","bookings@chauffeurlk.com","Booking #".$r['booking_id']." Status ".booking_status2text($r['status'],1)."",booking_mail($r['firstname']." ".$r['lastname'],$r['booking_id'],$addii),"admin@chauffeurlk.com");
+		$l = mysqli_fetch_assoc(mysqli_query($sql, "SELECT pickup,destination FROM `maps_location` WHERE `booking_id` = '".$booking_id."' "));
+		
+		$addii = "Pickup : ".$l['pickup']."<br>Destination : ".$l['destination']." <br>Driver : ".$d['firstname']." ".$d['lastname']."<br>Driver mobile number : ".$d['mobileno']." <br>Status : ".booking_status2text($r['status'],1)."";
+		sendmailbymailgun($r['email'],$r['username'],"Bookings","bookings@chauffeurlk.com","Booking #".$bid." Status ".booking_status2text($r['status'],1)."",booking_mail($r['firstname']." ".$r['lastname'],$bid,$addii),"admin@chauffeurlk.com");
 						
 		$array["result"] = "success";
 		$array["message"] = "Booking marked as accepted.";
@@ -36,16 +45,17 @@ if (isset($_POST['accept_btn'])) {
 
 if (isset($_POST['on_the_way_btn'])) {
 
-	$query = "UPDATE booking SET status='3' WHERE driver_id='".$_COOKIE["user"]."' AND booking_id='".$bid."'";
+	$query = "UPDATE booking SET status='4' WHERE driver_id='".$_COOKIE["user"]."' AND booking_id='".$bid."'";
 
 	$b = mysqli_query($sql, $query);
 	
 	if($b) 
 	{ 
-		$r = mysqli_fetch_assoc(mysqli_query($sql, "SELECT * FROM `booking` b, users u WHERE `booking_id` = '".$bid."'  AND u.user_id=b.user_id"));
+		$r = mysqli_fetch_assoc(mysqli_query($sql, "SELECT b.*,u.email, u.username FROM `booking` b, users u WHERE `booking_id` = '".$bid."'  AND u.user_id=b.user_id"));
+		$l = mysqli_fetch_assoc(mysqli_query($sql, "SELECT pickup,destination FROM `maps_location` WHERE `booking_id` = '".$booking_id."' "));
 
-		$addii = "Pickup : ".$r['pickup']."<br>Destination : ".$r['destination']." <br>Status : ".booking_status2text($r['status'],1)."";
-		sendmailbymailgun($r['email'],$r['username'],"Bookings","bookings@chauffeurlk.com","Booking #".$r['booking_id']." Status ".booking_status2text($r['status'],1)."",booking_mail($r['firstname']." ".$r['lastname'],$r['booking_id'],$addii),"admin@chauffeurlk.com");
+		$addii = "Pickup : ".$l['pickup']."<br>Destination : ".$l['destination']." <br>Status : ".booking_status2text($r['status'],1)."";
+		sendmailbymailgun($r['email'],$r['username'],"Bookings","bookings@chauffeurlk.com","Booking #".$bid." Status ".booking_status2text($r['status'],1)."",booking_mail($r['firstname']." ".$r['lastname'],$bid,$addii),"admin@chauffeurlk.com");
 		
 		include_once 'sms.php';
 		sendsms($r['mobileno'],"Driver on the way, Time : ".$r["date"]." ".$r["time"]."");
@@ -62,7 +72,7 @@ if (isset($_POST['on_the_way_btn'])) {
 
 if (isset($_POST['start_btn'])) {
 
-	$query = "UPDATE booking SET status='3' WHERE driver_id='".$_COOKIE["user"]."' AND booking_id='".$bid."'";
+	$query = "UPDATE booking SET status='5' WHERE driver_id='".$_COOKIE["user"]."' AND booking_id='".$bid."'";
 	$query2 = "UPDATE driver_times SET start=NOW() WHERE driver_id='".$_COOKIE["user"]."' AND booking_id='".$bid."'";
 
 	$b = mysqli_query($sql, $query);
@@ -70,9 +80,10 @@ if (isset($_POST['start_btn'])) {
 	
 	if($b) 
 	{ 
-		$r = mysqli_fetch_assoc(mysqli_query($sql, "SELECT * FROM `booking` b, users u WHERE `booking_id` = '".$bid."'  AND u.user_id=b.user_id"));
+		$r = mysqli_fetch_assoc(mysqli_query($sql, "SELECT b.*,u.email, u.username FROM `booking` b, users u WHERE `booking_id` = '".$bid."'  AND u.user_id=b.user_id"));
+$l = mysqli_fetch_assoc(mysqli_query($sql, "SELECT pickup,destination FROM `maps_location` WHERE `booking_id` = '".$booking_id."' "));
 
-		$addii = "Pickup : ".$r['pickup']."<br>Destination : ".$r['destination']." <br>Status : ".booking_status2text($r['status'],1)."";
+		$addii = "Pickup : ".$l['pickup']."<br>Destination : ".$l['destination']." <br>Status : ".booking_status2text($r['status'],1)."";
 		sendmailbymailgun($r['email'],$r['username'],"Bookings","bookings@chauffeurlk.com","Booking #".$r['booking_id']." Status ".booking_status2text($r['status'],1)."",booking_mail($r['firstname']." ".$r['lastname'],$r['booking_id'],$addii),"admin@chauffeurlk.com");
 		
 		$array["result"] = "success";
@@ -87,7 +98,7 @@ if (isset($_POST['start_btn'])) {
 
 if (isset($_POST['complete_btn'])) {
 
-	$query = "UPDATE booking SET status='3' WHERE driver_id='".$_COOKIE["user"]."' AND booking_id='".$bid."'";
+	$query = "UPDATE booking SET status='6' WHERE driver_id='".$_COOKIE["user"]."' AND booking_id='".$bid."'";
 	$query2 = "UPDATE driver_times SET end=NOW() WHERE driver_id='".$_COOKIE["user"]."' AND booking_id='".$bid."'";
 
 	$b = mysqli_query($sql, $query);
@@ -95,9 +106,10 @@ if (isset($_POST['complete_btn'])) {
 	
 	if($b) 
 	{ 
-		$r = mysqli_fetch_assoc(mysqli_query($sql, "SELECT * FROM `booking` b, users u WHERE `booking_id` = '".$bid."'  AND u.user_id=b.user_id"));
+		$r = mysqli_fetch_assoc(mysqli_query($sql, "SELECT b.*,u.email, u.username FROM `booking` b, users u WHERE `booking_id` = '".$bid."'  AND u.user_id=b.user_id"));
+$l = mysqli_fetch_assoc(mysqli_query($sql, "SELECT pickup,destination FROM `maps_location` WHERE `booking_id` = '".$booking_id."' "));
 
-		$addii = "Pickup : ".$r['pickup']."<br>Destination : ".$r['destination']." <br>Status : ".booking_status2text($r['status'],1)."";
+		$addii = "Pickup : ".$l['pickup']."<br>Destination : ".$l['destination']." <br>Status : ".booking_status2text($r['status'],1)."";
 		sendmailbymailgun($r['email'],$r['username'],"Bookings","bookings@chauffeurlk.com","Booking #".$r['booking_id']." Status ".booking_status2text($r['status'],1)."",booking_mail($r['firstname']." ".$r['lastname'],$r['booking_id'],$addii),"admin@chauffeurlk.com");
 		//diveremail
 		
@@ -111,7 +123,7 @@ if (isset($_POST['complete_btn'])) {
 	goto output;
 }
 if (isset($_POST['make_bill_btn'])) {
-	file_get_contents("http://localhost/make_bill.php?id=".$_POST['booking_id']);
+	file_get_contents("http://chauffeurlk.com/make_bill.php?id=".$_POST['booking_id']);
 	$array["result"] = "success";
 	$array["message"] = "Bill has been created.";
 }
