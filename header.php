@@ -26,7 +26,7 @@ if(isset($_COOKIE["user"])) session_start();  ?>
 	<nav class="navbar navbar-expand-lg navbar-dark nav-navy_blue"> 
 	<a
 		class="navbar-brand" href="#">
-		<!--<img src="/images/icon.png" height="20px" />--> the chauffeur</a>
+		<!--<img src="/images/icon.png" height="20px" />--> The Chauffeur</a>
 		<ul class="navbar-nav mr-auto">
 		<li class="nav-item"><a class="nav-link text-white" href="/index.php"><i class="fa fa-home"></i> Home</a>
 		</li>
